@@ -16,30 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `estudiante_has_curso`
+-- Table structure for table `publicacion`
 --
 
-DROP TABLE IF EXISTS `estudiante_has_curso`;
+DROP TABLE IF EXISTS `publicacion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `estudiante_has_curso` (
+CREATE TABLE `publicacion` (
+  `cod_publicacion` int(11) NOT NULL,
+  `mensaje` varchar(100) DEFAULT NULL,
+  `fecha_creacion` date DEFAULT NULL,
   `estudiante_cui` int(11) NOT NULL,
-  `curso_cod_curso` int(11) NOT NULL,
-  PRIMARY KEY (`estudiante_cui`,`curso_cod_curso`),
-  KEY `fk_estudiante_has_curso_curso1_idx` (`curso_cod_curso`),
-  KEY `fk_estudiante_has_curso_estudiante1_idx` (`estudiante_cui`),
-  CONSTRAINT `fk_estudiante_has_curso_curso1` FOREIGN KEY (`curso_cod_curso`) REFERENCES `curso` (`cod_curso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_estudiante_has_curso_estudiante1` FOREIGN KEY (`estudiante_cui`) REFERENCES `estudiante` (`cui`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`cod_publicacion`),
+  KEY `fk_publicacion_estudiante_idx` (`estudiante_cui`),
+  CONSTRAINT `fk_publicacion_estudiante` FOREIGN KEY (`estudiante_cui`) REFERENCES `estudiante` (`cui`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `estudiante_has_curso`
+-- Dumping data for table `publicacion`
 --
 
-LOCK TABLES `estudiante_has_curso` WRITE;
-/*!40000 ALTER TABLE `estudiante_has_curso` DISABLE KEYS */;
-/*!40000 ALTER TABLE `estudiante_has_curso` ENABLE KEYS */;
+LOCK TABLES `publicacion` WRITE;
+/*!40000 ALTER TABLE `publicacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `publicacion` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-09 17:07:25
+-- Dump completed on 2024-03-09 22:53:55

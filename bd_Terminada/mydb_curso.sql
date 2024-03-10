@@ -16,26 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `catedratico`
+-- Table structure for table `curso`
 --
 
-DROP TABLE IF EXISTS `catedratico`;
+DROP TABLE IF EXISTS `curso`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `catedratico` (
-  `cod_catedratico` int(11) NOT NULL,
+CREATE TABLE `curso` (
+  `cod_curso` int(11) NOT NULL,
   `nombre` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`cod_catedratico`)
+  `catedratico_cod_catedratico` int(11) NOT NULL,
+  PRIMARY KEY (`cod_curso`),
+  KEY `fk_curso_catedratico1_idx` (`catedratico_cod_catedratico`),
+  CONSTRAINT `fk_curso_catedratico1` FOREIGN KEY (`catedratico_cod_catedratico`) REFERENCES `catedratico` (`cod_catedratico`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `catedratico`
+-- Dumping data for table `curso`
 --
 
-LOCK TABLES `catedratico` WRITE;
-/*!40000 ALTER TABLE `catedratico` DISABLE KEYS */;
-/*!40000 ALTER TABLE `catedratico` ENABLE KEYS */;
+LOCK TABLES `curso` WRITE;
+/*!40000 ALTER TABLE `curso` DISABLE KEYS */;
+/*!40000 ALTER TABLE `curso` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -47,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-09 17:07:25
+-- Dump completed on 2024-03-09 22:53:56
