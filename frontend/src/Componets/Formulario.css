@@ -1,0 +1,63 @@
+/* Formulario.css */
+
+.logo-container {
+  text-align: center;
+}
+
+.logo {
+  max-width: 200px; /* Ajusta el ancho máximo según tu preferencia */
+  margin-bottom: 20px; /* Agrega un margen inferior para separar la imagen del formulario */
+  display: block; /* Para centrar horizontalmente */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.formulario {
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.formulario h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.formulario input[type="text"],
+.formulario input[type="date"],
+.formulario input[type="password"],
+.formulario input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+}
+
+.formulario button {
+  width: 100%;
+  padding: 10px;
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.formulario button:hover {
+  background-color: #999;
+}
+
+.formulario p {
+  text-align: center;
+  color: red;
+  margin-top: 10px;
+}
