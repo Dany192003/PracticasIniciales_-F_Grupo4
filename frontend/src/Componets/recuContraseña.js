@@ -1,3 +1,4 @@
+import "./Formulario.css";
 import React, { useState } from 'react';
 
 function RecuperarContraseña(props) {
