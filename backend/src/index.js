@@ -105,32 +105,59 @@ app.get("/verificarDatos", (req, res) => {
 
 app.put("/cambiarContra", (req, res) => {
   const carnet = req.body.carnet;
-  const nuevaContra = req.body.nuevaContra;
+  const nuevaContraseña = req.body.nuevaContraseña;
 
-  if (carnet && nuevaContra) {
-    connection.query("UPDATE ");
+  if (carnet && nuevaContraseña) {
+    connection.query(
+      "UPDATE estudiante SET contraseña = ? WHERE carnet = ?",
+      [nuevaContraseña, carnet],
+      (error, resultado) => {
+        if (!error) {
+          res.send("CONTRASEÑA CAMBIADA");
+        } else {
+          res.send("Error al cambiar contraseña:" + error);
+        }
+      }
+    );
   } else {
     res.send("DATOS INCOMPLETOS");
   }
 });
 
-app.post("/nuevaPublicación", (req, res) => {
-  const cui = req.body.cui;
+app.post("/nuevaPublicacion", (req, res) => {
+  const carnet = req.body.carnet;
   const curso = req.body.curso;
   const catedratico = req.body.catedratico;
   const mensaje = req.body.mensaje;
   const fecha_publicación = req.body.fecha_publicación;
 
-  if (curso) {
-    codPubli = generarCodPublicacion();
-    connection.query("INSERT INTO publicacion SET ?", {
-      cod_publicacion: codPubli,
-      mensaje: mensaje,
-      fecha_creacion: fecha_publicación,
-      estudiante_cui: cui,
+  if (curso || catedratico) {
+    connection.query("SELECT * FROM publicacion", (error, filas) => {
+      let cod = filas.length;
+      if (cod > 0) {
+        cod = cod + 1;
+      } else {
+        cod = 1;
+      }
+      connection.query(
+        "INSERT INTO publicacion SET ?",
+        {
+          cod_publicacion: cod,
+          mensaje: mensaje,
+          fecha_creacion: fecha_publicación,
+          estudiante_carnet: carnet,
+          catedratico_cod_catedratico: catedratico,
+          curso_cod_curso: curso,
+        },
+        (error, resultados) => {
+          if (!error) {
+            res.send("PUBLICACION CREADA EXITOSAMENTE");
+          } else {
+            res.send("Error al crear publicación:", error);
+          }
+        }
+      );
     });
-  } else if (catedratico) {
-    connection.query();
   } else {
     res.send(
       "DEBE SELECCIONAR UN CURSO O CATEDRATICO PARA HACER UNA PUBLICACIÓN"
@@ -138,8 +165,17 @@ app.post("/nuevaPublicación", (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
-  res.send("Menu Principal");
+app.get("/listaInicial", (req, res) => {
+  connection.query(
+    "SELECT * FROM publicacion ORDER BY fecha_creacion DESC",
+    (error, resultado) => {
+      if (!error) {
+        res.json(resultado);
+      } else {
+        res.send("Ocurrio un error al listar las publicaciones: ", error);
+      }
+    }
+  );
 });
 
 app.post("/comentario", (req, res) => {});
@@ -147,13 +183,3 @@ app.post("/comentario", (req, res) => {});
 app.get("/verPerfil", (req, res) => {});
 
 app.get("/cursosAprobados", (req, res) => {});
-
-function generarCodPublicacion() {
-  connection.query("SELECT * FROM publicacion", (error, resultados) => {
-    if (resultados.length > 0) {
-      return resultados.length + 1;
-    } else {
-      return 1;
-    }
-  });
-}
