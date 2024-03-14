@@ -203,6 +203,40 @@ app.post("/agregarComentario", (req, res) => {
   }
 });
 
-app.get("/verPerfil", (req, res) => {});
+app.get("/verificarCarnet", (req, res) => {
+  const carnet = req.body.carnet;
+
+  if (carnet) {
+    connection.query(
+      "SELECT * FROM estudiantes WHERE carnet = ?",
+      [carnet],
+      (error, resultado) => {
+        if (resultado.length != 0) {
+          res.json({ existe: true });
+        } else {
+          res.json({ existe: false });
+        }
+      }
+    );
+  } else {
+    res.json({ error: "Datos incompletos" });
+  }
+});
+
+app.get("/verPerfil", (req, res) => {
+  const carnet = req.body.carnet;
+
+  if (carnet) {
+    connection.query(
+      "SELECT * FROM estudiante WHERE carnet = ?",
+      [carnet],
+      (error, resultado) => {
+        res.send(resultado);
+      }
+    );
+  } else {
+    res.json({ error: "Datos incompletos" });
+  }
+});
 
 app.get("/cursosAprobados", (req, res) => {});
