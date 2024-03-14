@@ -26,10 +26,16 @@ CREATE TABLE `publicacion` (
   `cod_publicacion` int(11) NOT NULL,
   `mensaje` varchar(100) DEFAULT NULL,
   `fecha_creacion` date DEFAULT NULL,
-  `estudiante_cui` int(11) NOT NULL,
+  `estudiante_carnet` int(11) NOT NULL,
+  `catedratico_cod_catedratico` int(11) DEFAULT NULL,
+  `curso_cod_curso`int(11) DEFAULT NULL,
   PRIMARY KEY (`cod_publicacion`),
-  KEY `fk_publicacion_estudiante_idx` (`estudiante_cui`),
-  CONSTRAINT `fk_publicacion_estudiante` FOREIGN KEY (`estudiante_cui`) REFERENCES `estudiante` (`cui`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_publicacion_estudiante_idx` (`estudiante_carnet`),
+  CONSTRAINT `fk_publicacion_estudiante` FOREIGN KEY (`estudiante_carnet`) REFERENCES `estudiante` (`carnet`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+   KEY `fk_publicacion_catedratico_idx` (`catedratico_cod_catedratico`),
+  CONSTRAINT `fk_publicacion_catedratico` FOREIGN KEY (`catedratico_cod_catedratico`) REFERENCES `catedratico` (`cod_catedratico`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `fk_publicacion_curso_idx` (`curso_cod_curso`),
+  CONSTRAINT `fk_publicacion_curso` FOREIGN KEY (`curso_cod_curso`) REFERENCES `curso` (`cod_curso`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
