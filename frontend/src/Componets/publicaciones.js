@@ -14,6 +14,9 @@ export function RegistroUsuario({ onBackToLogin }) {
     if (!nuevoTexto.trim()) {
       return;
     }
+    const handleVerPerfil = () => {
+        history.push("/perfil");
+    };
 
 
     setPublicaciones([...publicaciones, { autor: nombres, texto: nuevoTexto }]);
@@ -32,7 +35,9 @@ export function RegistroUsuario({ onBackToLogin }) {
         <textarea value={nuevoTexto} onChange={(e) => setNuevoTexto(e.target.value)} />
         <button type="submit">Publicar</button>
       </form>
-      <h2>Publicaciones</h2>
+            <h2>Publicaciones</h2>
+            <button onClick={handleVerPerfil}>Ver Perfil</button>
+            {/* Aquí se mostrarían las publicaciones */}
       <ul>
         {publicaciones.map((publicacion, index) => (
           <li key={index}>
