@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { RegistroUsuario } from '../Componets/RegistrarUsuario';
 import { TaskPage } from '../Componets/publicaciones';
 import { RecuperarContraseña } from '../Componets/recuContraseña';
+import { DatosUsuarios } from '../Componets/perfiles';
 
 
 export const Rutas = () => {
