@@ -239,4 +239,32 @@ app.get("/verPerfil", (req, res) => {
   }
 });
 
+app.put("/actualizarPerfil", (req, res) => {
+  const carnet = req.body.carnet;
+  const nv_nombres = req.body.nv_nombres;
+  const nv_apellidos = req.body.nv_apellidos;
+  const nv_contraseña = req.body.nv_contraseña;
+  const nv_correo = req.body.nv_correo;
+
+  connection.query(
+    "UPDATE estudiante SET ? WHERE carnet = ?",
+    [
+      {
+        nombres: nv_nombres,
+        apellidos: nv_apellidos,
+        contraseña: nv_contraseña,
+        correo: nv_correo,
+      },
+      carnet,
+    ],
+    (error, resultado) => {
+      if (resultado.length > 0) {
+        res.json({ mensaje: "Datos actualizados correctamente" });
+      } else {
+        res.json({ error: error });
+      }
+    }
+  );
+});
+
 app.get("/cursosAprobados", (req, res) => {});
