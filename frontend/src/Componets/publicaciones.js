@@ -1,38 +1,45 @@
-import React, { useState } from 'react';
+import "./Formulario.css";
+import React, { useState } from 'react';import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
-function TaskPage({ onBackToLogin }) {
-  const [tasks, setTasks] = useState([
-    { id: 1, text: 'Tarea 1', completed: false },
-    { id: 2, text: 'Tarea 2', completed: false },
-    { id: 3, text: 'Tarea 3', completed: false }
-  ]);
+export function RegistroUsuario({ onBackToLogin }) {
+  const [publicaciones, setPublicaciones] = useState([]);
+  const [nuevoTexto, setNuevoTexto] = useState("");
+  const history = useHistory();
 
-  const handleTaskClick = (taskId) => {
-    setTasks(tasks.map(task => {
-      if (task.id === taskId) {
-        return { ...task, completed: !task.completed };
-      }
-      return task;
-    }));
+
+  const handlePublicacionSubmit = (e) => {
+    e.preventDefault();
+
+    if (!nuevoTexto.trim()) {
+      return;
+    }
+
+
+    setPublicaciones([...publicaciones, { autor: nombres, texto: nuevoTexto }]);
+    setNuevoTexto("");
+  };
+
+  const handleAutorClick = (nombre) => {
+    history.push(`/autor/${nombre}`);
   };
 
   return (
     <div>
-      <h2>Tareas</h2>
+      <h2>Crear Publicación</h2>
       <button onClick={onBackToLogin}>Regresar al Login</button>
+      <form onSubmit={handlePublicacionSubmit}>
+        <textarea value={nuevoTexto} onChange={(e) => setNuevoTexto(e.target.value)} />
+        <button type="submit">Publicar</button>
+      </form>
+      <h2>Publicaciones</h2>
       <ul>
-        {tasks.map(task => (
-          <li
-            key={task.id}
-            style={{ textDecoration: task.completed ? 'line-through' : 'none' }}
-            onClick={() => handleTaskClick(task.id)}
-          >
-            {task.text}
+        {publicaciones.map((publicacion, index) => (
+          <li key={index}>
+            <span onClick={() => handleAutorClick(publicacion.autor)}>{publicacion.autor}</span>: {publicacion.texto}
           </li>
         ))}
       </ul>
     </div>
   );
 }
-
-export default TaskPage;
