@@ -134,11 +134,7 @@ app.post("/nuevaPublicacion", (req, res) => {
   if (curso || catedratico) {
     connection.query("SELECT * FROM publicacion", (error, filas) => {
       let cod = filas.length;
-      if (cod > 0) {
-        cod = cod + 1;
-      } else {
-        cod = 1;
-      }
+      cod = cod + 1;
       connection.query(
         "INSERT INTO publicacion SET ?",
         {
@@ -178,7 +174,34 @@ app.get("/listaInicial", (req, res) => {
   );
 });
 
-app.post("/comentario", (req, res) => {});
+app.post("/agregarComentario", (req, res) => {
+  const comentario = req.body.comentario;
+  const cod_publicacion = req.body.cod_publicacion;
+
+  if (comentario && cod_publicacion) {
+    connection.query("SELECT * FROM comentario", (error, filas) => {
+      let cod = filas.length;
+      cod = cod + 1;
+      connection.query(
+        "INSERT INTO comentario SET ?",
+        {
+          cod_comentario: cod,
+          comentario: comentario,
+          publicacion_cod_publicacion: cod_publicacion,
+        },
+        (error, resultado) => {
+          if (!error) {
+            res.json({ mensaje: "Comentario publicado" });
+          } else {
+            res.json({ error: error });
+          }
+        }
+      );
+    });
+  } else {
+    res.json({ error: "Datos incompletos" });
+  }
+});
 
 app.get("/verPerfil", (req, res) => {});
 
