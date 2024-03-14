@@ -2,6 +2,9 @@ import React from 'react'
 import { Login } from '../Componets/Login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { RegistroUsuario } from '../Componets/RegistrarUsuario';
+import { TaskPage } from '../Componets/publicaciones';
+import { RecuperarContraseña } from '../Componets/recuContraseña';
+
 
 export const Rutas = () => {
   return (
